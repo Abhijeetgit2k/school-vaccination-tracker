@@ -56,33 +56,23 @@ cd ../frontend
 npm install
 ```
 
-4. Create a `.env` file in the backend directory with the following variables:
-```
-PORT=5000
-DB_HOST=localhost
-DB_USER=your_mysql_username
-DB_PASSWORD=your_mysql_password
-DB_NAME=vaccination_tracker
-JWT_SECRET=your_jwt_secret
-```
-
 ## Running the Application
 
 1. Start the backend server:
-```bash
+```bash/powershell
 cd backend
-npm run dev
+npm start
 ```
 
 2. Start the frontend development server:
-```bash
+```bash/pwershell
 cd frontend
 npm start
 ```
 
 The application will be available at:
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+- Backend API: http://localhost:5002
 
 ## Project Structure
 
