@@ -1,0 +1,639 @@
+API Documentation
+
+# School Vaccination Tracker API Documentation
+
+## Base URL
+http://localhost:5000/api
+
+
+## Authentication
+All API endpoints except /auth/login and /auth/register require authentication using a JWT token. Include the token in the Authorization header:
+Authorization: Bearer <your_jwt_token>
+
+
+## API Endpoints
+
+### Authentication
+
+#### Register a New User
+http
+POST /auth/register
+
+
+**Request Body:**
+json
+{
+  "email": "string",
+  "password": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "role": "string",
+  "schoolId": "number"
+}
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "user": {
+      "id": "number",
+      "email": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "role": "string",
+      "schoolId": "number"
+    },
+    "token": "string"
+  }
+}
+
+
+#### Login
+http
+POST /auth/login
+
+
+**Request Body:**
+json
+{
+  "email": "string",
+  "password": "string"
+}
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "user": {
+      "id": "number",
+      "email": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "role": "string",
+      "schoolId": "number"
+    },
+    "token": "string"
+  }
+}
+
+
+#### Get Current User Profile
+http
+GET /auth/me
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "user": {
+      "id": "number",
+      "email": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "role": "string",
+      "schoolId": "number"
+    }
+  }
+}
+
+
+### Students
+
+#### Get All Students
+http
+GET /students
+
+
+**Query Parameters:**
+- search (optional): Search by name or student ID
+- class (optional): Filter by class
+- vaccinationStatus (optional): Filter by vaccination status ('vaccinated' or 'not-vaccinated')
+
+**Response:**
+json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "studentId": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "dateOfBirth": "string",
+      "gender": "string",
+      "class": "string",
+      "section": "string",
+      "parentName": "string",
+      "parentContact": "string",
+      "address": "string",
+      "isActive": "boolean"
+    }
+  ]
+}
+
+
+#### Get Student by ID
+http
+GET /students/:id
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "studentId": "string",
+    "firstName": "string",
+    "lastName": "string",
+    "dateOfBirth": "string",
+    "gender": "string",
+    "class": "string",
+    "section": "string",
+    "parentName": "string",
+    "parentContact": "string",
+    "address": "string",
+    "isActive": "boolean"
+  }
+}
+
+
+#### Create Student
+http
+POST /students
+
+
+**Request Body:**
+json
+{
+  "studentId": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "dateOfBirth": "string",
+  "gender": "string",
+  "class": "string",
+  "section": "string",
+  "parentName": "string",
+  "parentContact": "string",
+  "address": "string"
+}
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "studentId": "string",
+    "firstName": "string",
+    "lastName": "string",
+    "dateOfBirth": "string",
+    "gender": "string",
+    "class": "string",
+    "section": "string",
+    "parentName": "string",
+    "parentContact": "string",
+    "address": "string",
+    "isActive": "boolean"
+  }
+}
+
+
+#### Update Student
+http
+PUT /students/:id
+
+
+**Request Body:**
+json
+{
+  "firstName": "string",
+  "lastName": "string",
+  "dateOfBirth": "string",
+  "gender": "string",
+  "class": "string",
+  "section": "string",
+  "parentName": "string",
+  "parentContact": "string",
+  "address": "string"
+}
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "studentId": "string",
+    "firstName": "string",
+    "lastName": "string",
+    "dateOfBirth": "string",
+    "gender": "string",
+    "class": "string",
+    "section": "string",
+    "parentName": "string",
+    "parentContact": "string",
+    "address": "string",
+    "isActive": "boolean"
+  }
+}
+
+
+#### Delete Student (Soft Delete)
+http
+DELETE /students/:id
+
+
+**Response:**
+json
+{
+  "success": true,
+  "message": "Student deleted successfully"
+}
+
+
+### Vaccinations
+
+#### Get All Vaccinations
+http
+GET /vaccinations
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "studentId": "number",
+      "driveId": "number",
+      "date": "string",
+      "doseNumber": "number",
+      "status": "string",
+      "notes": "string",
+      "student": {
+        "firstName": "string",
+        "lastName": "string",
+        "studentId": "string"
+      },
+      "vaccinationDrive": {
+        "name": "string",
+        "vaccineName": "string"
+      }
+    }
+  ]
+}
+
+
+#### Get Vaccination by ID
+http
+GET /vaccinations/:id
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "studentId": "number",
+    "driveId": "number",
+    "date": "string",
+    "doseNumber": "number",
+    "status": "string",
+    "notes": "string",
+    "student": {
+      "firstName": "string",
+      "lastName": "string",
+      "studentId": "string"
+    },
+    "vaccinationDrive": {
+      "name": "string",
+      "vaccineName": "string"
+    }
+  }
+}
+
+
+#### Create Vaccination Record
+http
+POST /vaccinations
+
+
+**Request Body:**
+json
+{
+  "studentId": "number",
+  "driveId": "number",
+  "date": "string",
+  "doseNumber": "number",
+  "status": "string",
+  "notes": "string"
+}
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "studentId": "number",
+    "driveId": "number",
+    "date": "string",
+    "doseNumber": "number",
+    "status": "string",
+    "notes": "string"
+  }
+}
+
+
+#### Update Vaccination Record
+http
+PUT /vaccinations/:id
+
+
+**Request Body:**
+json
+{
+  "date": "string",
+  "doseNumber": "number",
+  "status": "string",
+  "notes": "string"
+}
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "studentId": "number",
+    "driveId": "number",
+    "date": "string",
+    "doseNumber": "number",
+    "status": "string",
+    "notes": "string"
+  }
+}
+
+
+#### Delete Vaccination Record
+http
+DELETE /vaccinations/:id
+
+
+**Response:**
+json
+{
+  "success": true,
+  "message": "Vaccination record deleted successfully"
+}
+
+
+### Vaccination Drives
+
+#### Get All Vaccination Drives
+http
+GET /vaccination-drives
+
+
+**Query Parameters:**
+- status (optional): Filter by status ('scheduled', 'in-progress', 'completed', 'cancelled')
+- startDate (optional): Filter by start date (ISO format)
+- endDate (optional): Filter by end date (ISO format)
+
+**Response:**
+json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "number",
+      "name": "string",
+      "vaccineName": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "targetClasses": ["string"],
+      "totalDoses": "number",
+      "dosesPerStudent": "number",
+      "location": "string",
+      "notes": "string",
+      "status": "string",
+      "coordinator": "number",
+      "students": [
+        {
+          "name": "string",
+          "email": "string"
+        }
+      ]
+    }
+  ]
+}
+
+
+#### Get Vaccination Drive by ID
+http
+GET /vaccination-drives/:id
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "vaccineName": "string",
+    "startDate": "string",
+    "endDate": "string",
+    "targetClasses": ["string"],
+    "totalDoses": "number",
+    "dosesPerStudent": "number",
+    "location": "string",
+    "notes": "string",
+    "status": "string",
+    "coordinator": "number",
+    "students": [
+      {
+        "name": "string",
+        "email": "string"
+      }
+    ]
+  }
+}
+
+
+#### Create Vaccination Drive
+http
+POST /vaccination-drives
+
+
+**Request Body:**
+json
+{
+  "name": "string",
+  "vaccineName": "string",
+  "startDate": "string",
+  "endDate": "string",
+  "targetClasses": ["string"],
+  "totalDoses": "number",
+  "dosesPerStudent": "number",
+  "location": "string",
+  "notes": "string"
+}
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "vaccineName": "string",
+    "startDate": "string",
+    "endDate": "string",
+    "targetClasses": ["string"],
+    "totalDoses": "number",
+    "dosesPerStudent": "number",
+    "location": "string",
+    "notes": "string",
+    "status": "string",
+    "coordinator": "number"
+  }
+}
+
+
+#### Update Vaccination Drive
+http
+PUT /vaccination-drives/:id
+
+
+**Request Body:**
+json
+{
+  "name": "string",
+  "vaccineName": "string",
+  "startDate": "string",
+  "endDate": "string",
+  "targetClasses": ["string"],
+  "totalDoses": "number",
+  "dosesPerStudent": "number",
+  "location": "string",
+  "notes": "string",
+  "status": "string"
+}
+
+
+**Response:**
+json
+{
+  "success": true,
+  "data": {
+    "id": "number",
+    "name": "string",
+    "vaccineName": "string",
+    "startDate": "string",
+    "endDate": "string",
+    "targetClasses": ["string"],
+    "totalDoses": "number",
+    "dosesPerStudent": "number",
+    "location": "string",
+    "notes": "string",
+    "status": "string",
+    "coordinator": "number"
+  }
+}
+
+
+#### Delete Vaccination Drive
+http
+DELETE /vaccination-drives/:id
+
+
+**Response:**
+json
+{
+  "success": true,
+  "message": "Vaccination drive deleted successfully"
+}
+
+
+## Error Responses
+
+All endpoints may return the following error responses:
+
+### 400 Bad Request
+json
+{
+  "success": false,
+  "errors": [
+    {
+      "msg": "string",
+      "param": "string",
+      "location": "string"
+    }
+  ]
+}
+
+
+### 401 Unauthorized
+json
+{
+  "success": false,
+  "message": "Unauthorized access"
+}
+
+
+### 404 Not Found
+json
+{
+  "success": false,
+  "message": "Resource not found"
+}
+
+
+### 500 Internal Server Error
+json
+{
+  "success": false,
+  "message": "Error message",
+  "error": "Detailed error message"
+}
+
+
+## Testing the API
+
+You can test the API using tools like Postman or curl. Here's an example using curl:
+
+bash
+# Login
+curl -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "admin@example.com", "password": "adminpassword"}'
+
+# Get Students (with token)
+curl http://localhost:5000/api/students \
+  -H "Authorization: Bearer <your_token>"
+
+
+## Rate Limiting
+
+The API implements rate limiting to prevent abuse. The current limits are:
+- 100 requests per minute per IP address
+- 1000 requests per hour per IP address
+
+## Versioning
+
+The current API version is v1. All endpoints are prefixed with /api. 
